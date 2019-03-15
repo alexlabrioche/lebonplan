@@ -1,0 +1,33 @@
+{{#each offers}}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-lg-9">
+            <div class="item-list-box">
+                <div class="item-list-thumbnail">
+                    <img id="item-list-img" src="{{thumbnail}}" alt="">
+                </div>
+                <a  href="/offers/{{id}}" class=" item-list-content">
+                    <div class="item-list-infos">
+                        <div id="item-list-title">
+                            <h4>{{title}}</h4>
+                        </div>
+                        <div id="item-list-price">
+                            <span>{{price}}€</span>
+                        </div>
+                        {{#if criteria}}
+                        <div id="item-list-type">
+                            <span>{{this}}</span>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <div class="item-list-date">
+                        <div id="item-list-date">
+                            <span>Publié le : {{date}}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{{/each}}

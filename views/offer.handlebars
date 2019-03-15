@@ -1,0 +1,30 @@
+{{> nav}}
+<div class="container offer-container">
+    <div class="row">
+        <div class="col-12 col-md-10 col-lg-8">
+            {{> offer-carousel}}
+            <div class="row">
+                <div class="offer-header col-10">
+                    <h3 id="offer-title">{{offer.title}}</h3> 
+                    <div id="offer-price">{{offer.price}}€</div>
+                    <div id="offer-date"><span>Publié le : </span>{{date}}</div>
+                </div>
+                <img href="#" id="offer-favorites-logo" data-offer="{{offer.id}}" src="/img/logo/fav-logo-disabled.png"></a>
+            </div>
+            <div id="offer-description" class="offer-content col-12">
+                <h5 class="offer-subtitle">Description</h5>
+                <p>{{offer.description}}</p>
+                {{#if criteria}}
+                <div id="offer-critType" class="offer-criteria col-6">Type : {{offer.criteria.type}}</div>
+                <div id="offer-critSize" class="offer-criteria col-6">Taille : {{offer.criteria.size}}</div>
+                {{/if}}
+            </div>
+            <div id="offer-city" class="offer-content col-12">
+                <h5 class="offer-subtitle">Localisation</h5>
+                <span>{{offer.city}}</span>
+            </div>
+        </div>
+    {{> aside}}
+    </div>
+    {{> footer}}
+</div>

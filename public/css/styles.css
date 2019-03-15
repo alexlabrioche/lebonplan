@@ -1,0 +1,225 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+h2 {
+  font-family: "Nova Mono", monospace;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #eb5e00;
+}
+
+.home-header {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.home-header-title {
+  font-size: 5rem;
+}
+
+.home-header-buttons {
+  margin: 3rem;
+}
+
+.navbar {
+  background: #eb5e00;
+}
+
+.navbar-brand {
+  font-family: "Nova Mono", monospace;
+  font-size: 1.6rem;
+}
+
+.navbar-brand-logo {
+  width: 2rem;
+}
+
+.offer-container {
+  padding-top: 2rem;
+}
+
+.carousel-item img {
+  margin: auto;
+}
+
+#offer-title {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+#offer-price {
+  font-size: 1.5rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #eb5e00;
+}
+
+#offer-date {
+  font-size: 0.8rem;
+  color: #5c5c5c;
+}
+
+#offer-favorites-logo {
+  display: flex;
+  align-self: flex-end;
+  width: 4rem;
+  height: 4rem;
+  cursor: pointer;
+}
+
+.offer-header {
+  padding-top: 1rem;
+}
+
+.offer-content {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid #DEE2E6;
+}
+
+.offer-subtitle {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.aside-card {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+}
+
+.btn-outline-primary {
+  color: #eb5e00;
+  border: 1px solid #eb5e00;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-outline-secondary {
+  color: #0066eb;
+  border: 1px solid #0066eb;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.btn-outline-primary:hover {
+  background: #eb5e00;
+  border: 1px solid #eb5e00;
+}
+
+.btn-outline-secondary:hover {
+  background: #0066eb;
+  border: 1px solid #0066eb;
+}
+
+.footer-logo {
+  width: 3rem;
+  height: 3rem;
+}
+
+.footer-logo-text {
+  font-family: "Nova Mono", monospace;
+  font-size: 1.8rem;
+  padding-left: 0.5rem;
+}
+
+.error-header {
+  padding: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.error-title {
+  font-size: 4rem;
+  font-family: "Nova Mono", monospace;
+}
+
+.error-logo {
+  width: 18rem;
+  padding-top: 2rem;
+}
+
+.error-content {
+  padding-top: 2rem;
+  font-size: 2rem;
+}
+
+.item-list-box {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #DEE2E6;
+}
+
+.item-list-thumbnail {
+  width: 10rem;
+  height: 10rem;
+  background: #DEE2E6;
+  text-align: center;
+}
+
+.item-list-content {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#item-list-img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#item-list-price {
+  font-size: 1.5rem;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  color: #eb5e00;
+}
+
+#item-list-date {
+  font-size: 0.8rem;
+  color: #5c5c5c;
+}
+
+.sign-up-box {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-content {
+  border: 1px solid #DEE2E6;
+  padding: 2rem;
+}
+
+.profile-main {
+  height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.profile-main h5 {
+  font-size: 1.5rem;
+}
+
+.form-control:focus {
+  border-color: #eb5e00;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 55, 0, 0.6);
+}
+
+/*# sourceMappingURL=styles.css.map */

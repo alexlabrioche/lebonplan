@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row sign-up-box">
+        <h5>Login</h5>
+        <form action="/login" method="POST" class="sign-up-content">
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Nom d'utilisateur</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Dohn Joe" name="username" aria-label="username" aria-describedby="basic-addon1">
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Mot de passe</span>
+                </div>
+                <input type="password" class="form-control" placeholder="8 caractères min..." name="password" aria-label="password" aria-describedby="basic-addon1">
+            </div>
+
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Confirmer</span>
+                </div>
+                <input type="password" class="form-control" placeholder="Identique au mot de passe" name="confirm" aria-label="confirm" aria-describedby="basic-addon1">
+            </div>
+
+
+            <button class="btn btn-outline-primary" type="submit" role="button">S'enregistrer</button>
+        
+        
+        </form>
+    </div>
+{{> footer}}
+</div>
