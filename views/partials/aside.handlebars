@@ -2,9 +2,14 @@
     <div class="col-12">
         <div class="aside-card card">
             <div class="card-body">
-                <h5 class="card-title">Vendeur</h5>
-                <h6 class="card-subtitle mb-2 text-muted">contact</h6>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <div class="row">
+                    <img class="card-thumbnail col-3" src="{{offer.user.thumbnail}}" alt="">
+                    <div class="card-profile-infos col-9">
+                        <h5 class="card-title">Publié par :</h5>
+                        <h6 class="card-subtitle mb-2">{{offer.user.firstName}}</h6>
+                        <p class="card-text">{{offer.user.description}}</p>
+                    </div>
+                </div>
                 <button type="button" class="btn btn-outline-secondary">Envoyer un message</button>
                 <button type="button" class="btn btn-outline-primary">Acheter en ligne</button>
             </div>

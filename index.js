@@ -7,6 +7,9 @@ var mongoose = require("mongoose");
 var passport = require("passport");
 var OfferModel = require('./models').Offer;
 var bodyParser = require("body-parser");
+var multer = require('multer');
+var upload = multer({ dest: 'public/uploads/' });
+var fs = require('fs');
 var LocalStrategy = require("passport-local");
 var passportLocalMongoose = require("passport-local-mongoose");
 var User = require("./models").User; // same as: var User = require('./models/user');
@@ -83,12 +86,20 @@ function getDateInFrench(str) {
     var date = new Date(str)
     var day = date.getDate();
     var month = parseInt(date.getMonth()) + 1;
+    if (month < 10) {
+        month = "0" + month;
+    };
     var year = date.getFullYear();
     var hours = date.getHours();
+    if (hours < 10) {
+        hours = "0" + hours;
+    };
     var mins = date.getMinutes();
+    if (mins < 10) {
+        mins = "0" + mins;
+    };
     return day + '/' + month + '/' + year + ' à ' + hours + ':' + mins
   };
-
 
 //homePage
 app.get('/', function(req, res) {
@@ -170,7 +181,7 @@ app.post(
       successRedirect: "/",
       failureRedirect: "/"
     })
-  );
+);
 //Profile page
 app.get('/profile', function(req, res) {
     var user = req.user;
@@ -188,7 +199,60 @@ app.get('/profile', function(req, res) {
 app.get("/logout", function(req, res) {
     req.logout();
     res.redirect("/");
-  });
+});
+
+
+//Submit new offer 
+app.get("/submit", function(req, res) {
+    res.render('submit-offer', {
+        stylesheets: stylesheets,
+        scripts: scripts
+    })
+});
+
+app.post('/submit', upload.single('image'), function(req, res) {
+    // console.log('submit request file', req.file);
+    var id = 303;
+    fs.rename(
+        req.file.path,
+        "public/uploads/" + req.file.filename + ".jpg",
+        function(err) {
+            if (err) { console.log("Writing error", err) }
+            User.
+                findOne({id: id}, function(err, user) {
+                    if (err) return handleError(err);
+                    console.log('populateUser',user)
+                    var city =  req.body.city
+                    var newOffer = new OfferModel({
+                        user: new mongoose.Types.ObjectId(user._id),
+                        id: 1466,
+                        title: req.body.title,
+                        description: req.body.description,
+                        images: "/uploads/" + req.file.filename + ".jpg",
+                        price: req.body.price,
+                        city: city.toLowerCase()
+                    });
+                    console.log('new offer', newOffer)
+                    newOffer.save(function(err, offer) {
+                        if (err) { console.log(err) }
+                        else {
+                            console.log('user saved with success', offer);
+                            res.render('success', {
+                                stylesheets: stylesheets,
+                                scripts: scripts
+                            });
+                        };
+                    });
+                });
+        });
+});
+
+
+
+
+
+
+
 
 //citiesListPage
 app.get('/cities/:city', function(req, res) {
@@ -222,11 +286,14 @@ app.get('/cities/:city', function(req, res) {
 });
 
 app.get('/add/favorites/:offerId', function(req, res) {
+    var offerId = req.params.offerId
+    console.log(offerId)
     res.json({
         isFavorite: true
     })
 });
 app.get('/remove/favorites/:offerId', function(req, res) {
+    var offerId = req.params.offerId
     res.json({
         isFavorite: false
     })
@@ -236,29 +303,29 @@ app.get('/remove/favorites/:offerId', function(req, res) {
 app.get('/offers/:id', function(req, res) {
     var id = req.params.id;
     var authenticated = req.isAuthenticated();
-    OfferModel.findOne({ id: id }, function(err, offer) {
-    if (err !== null) {
-        console.log('offer findOne error: ', err);
-    } else {
-        var images = offer.images.map(function(image, index) {
-            return {
-                isActive: index === 0,
-                image: image
-            }
-        })
-        // console.log('images', images)
-        res.render('offer', {
-            stylesheets: stylesheets,
-            scripts: scripts,
-            offer: offer,
-            date: getDateInFrench(offer.created),
-            images, images,
-            authenticated: authenticated
-        
+    OfferModel.
+        findOne({id: id}).
+        populate('user').
+        exec(function(err, offer) {
+            if (err) return handleError(err);
+            console.log(offer.user.firstName);
+            var images = offer.images.map(function(image, index) {
+                return {
+                    isActive: index === 0,
+                    image: image
+                }
+            })
+            res.render('offer', {
+                stylesheets: stylesheets,
+                scripts: scripts,
+                offer: offer,
+                date: getDateInFrench(offer.created),
+                images, images,
+                authenticated: authenticated
+            
+            });
         });
-    }
-    });
-})
+});
 //errorPage
 app.get('/*', function(req, res) {
     res.render('e404', {

@@ -17,19 +17,24 @@ a:hover {
   color: #eb5e00;
 }
 
-.home-header {
+.home-main {
   padding: 3rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 80vh;
 }
 
-.home-header-title {
+.home-title {
   font-size: 5rem;
 }
 
-.home-header-buttons {
+.home-buttons {
   margin: 3rem;
+}
+
+.home-logo {
+  width: 20%;
 }
 
 .navbar {
@@ -70,12 +75,15 @@ a:hover {
   color: #5c5c5c;
 }
 
+.offer-header-secondary {
+  display: flex;
+}
+
 #offer-favorites-logo {
   display: flex;
   align-self: flex-end;
   width: 4rem;
   height: 4rem;
-  cursor: pointer;
 }
 
 .offer-header {
@@ -96,6 +104,11 @@ a:hover {
 .aside-card {
   margin-top: 3rem;
   margin-bottom: 1rem;
+}
+
+.card-thumbnail {
+  border-radius: 50%;
+  height: 100%;
 }
 
 .btn-outline-primary {
@@ -220,6 +233,53 @@ a:hover {
 .form-control:focus {
   border-color: #eb5e00;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 55, 0, 0.6);
+}
+
+.submit-offer-box {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-offer-content {
+  border: 1px solid #DEE2E6;
+  padding: 2rem;
+}
+
+.success-main {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.success-title {
+  font-size: 2.5rem;
+  font-family: "Nova Mono", monospace;
+}
+
+.success-logo {
+  width: 20%;
+}
+
+.profile-main {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.profile-title {
+  font-size: 2.5rem;
+  font-family: "Nova Mono", monospace;
+}
+
+.profile-logo {
+  width: 20%;
 }
 
 /*# sourceMappingURL=styles.css.map */

@@ -27,19 +27,21 @@ a:hover {
     color: $color-primary;
 }
 //Home /////
-.home-header {
+.home-main {
     padding: 3rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 80vh;
 }
-.home-header-title {
+.home-title {
     font-size: 5rem;
 }
-
-.home-header-buttons {
+.home-buttons {
     margin: 3rem;
+}
+.home-logo {
+    width: 20%;
 }
 ////// NAVBAR //////
 .navbar {
@@ -76,12 +78,14 @@ a:hover {
     font-size: 0.8rem;
     color: $color-third;
 }
+.offer-header-secondary {
+    display: flex;
+}
 #offer-favorites-logo {
     display: flex;
     align-self: flex-end;
     width: 4rem;
     height: 4rem;
-    cursor: pointer;
 }
 .offer-header {
     padding-top: 1rem;
@@ -100,6 +104,10 @@ a:hover {
 .aside-card {
     margin-top: 3rem;
     margin-bottom: 1rem;
+}
+.card-thumbnail {
+    border-radius: 50%;
+    height: 100%;
 }
 .btn-outline-primary {
     color: $color-primary;
@@ -214,3 +222,45 @@ a:hover {
     border-color: $color-primary;
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(151, 55, 0, 0.6);
   }
+// Submit-offer
+.submit-offer-box {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.submit-offer-content {
+    border: 1px solid $color-fourth;
+    padding: 2rem;
+}
+// Success Post 
+.success-main {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.success-title {
+    font-size: 2.5rem;
+    font-family: $font-theme;
+}
+.success-logo {
+    width: 20%;
+}
+// Profile page 
+.profile-main {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.profile-title {
+    font-size: 2.5rem;
+    font-family: $font-theme;
+}
+.profile-logo {
+    width: 20%;
+}
