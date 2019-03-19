@@ -1,3 +1,4 @@
+//npm Require
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
@@ -5,16 +6,22 @@ var expressSession = require("express-session");
 var MongoStore = require("connect-mongo")(expressSession);
 var mongoose = require("mongoose");
 var passport = require("passport");
-var OfferModel = require('./models').Offer;
+var expValChecker = require("express-validator/check");
 var bodyParser = require("body-parser");
 var multer = require('multer');
-var upload = multer({ dest: 'public/uploads/' });
 var fs = require('fs');
 var LocalStrategy = require("passport-local");
-var passportLocalMongoose = require("passport-local-mongoose");
+//npm local require
+var offersRoutes = require('./routes/offers');
+var citiesRoutes = require('./routes/cities');
+var OfferModel = require('./models').Offer;
+var upload = multer({ dest: 'public/uploads/' });
 var User = require("./models").User; // same as: var User = require('./models/user');
 var port = process.env.PORT || 3000;
 var app = express();
+var check = expValChecker.check; // get references to the 2 validation functions
+var validationResult = expValChecker.validationResult;
+
 
 //initialise app
 mongoose.connect(
@@ -29,6 +36,8 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+app.use('/offers', offersRoutes);
+app.use('/cities', citiesRoutes);
 
 // enable session management
 app.use(
@@ -48,7 +57,7 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser()); // JSON.stringify
 passport.deserializeUser(User.deserializeUser()); // JSON.parse
 
-  
+
 //Scripts&stylesheets
 var stylesheets = [
     {
@@ -125,44 +134,44 @@ app.get('/signup', function(req, res) {
         });
     };
 });
-app.post('/signup', function(req, res) { // recupère les infos du sign-up
-    console.log('sign-up')
-    var password = req.body.password;
-    User.register( 
-        new User({ // défini un nouvel utilisateur dans la base de donnée
-            username: req.body.username,
-            password: req.body.pasword,
-            confirm: req.body.confirm
-        }),
-        password, // hash le mot de passe
-        function(err, user) {
-            if (err) {
-                console.log('Sign Up error: ', err);
-            } else {
-                console.log(user)
-                var pwdRegex = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+){8}$/;
-                var foundPwd = password.match(pwdRegex);
-                // var mailRegex = /^[^\W][a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\@[a-zA-Z0-9_]+(\.[a-zA-Z0-9_]+)*\.[a-zA-Z]{2,4}$/;
-                // var foundMail = user.email.match(mailRegex);
-                if (foundPwd === null) {
-                    console.log('password too short');
-                    return res.render('/signup');
-                }
-                // if (foundMail === null) {
-                //     console.log('invalid email');
-                //     return res.render('/signup');
-                // }
-                if (user.password != user.confirm) {
-                    console.log('wrong confirmation password');
-                    return res.render('/signup');
-                } else {
-                    passport.authenticate("local")(req, res, function() {
-                        res.redirect("/profile")
-                    })
-                };
-            };
-        }
-    );
+app.post('/signup', [
+    check('email').isEmail(),
+    check('password').isLength({ min: 8 })
+    ], function(req, res) { // recupère les infos du sign-up, valide le mail et le mot de passe
+        var errors = validationResult(req);
+        // console.log('errors array', errors.array()[0].msg);
+        if (!errors.isEmpty()) {
+            return res.render('signup', {
+                stylesheets: stylesheets,
+                scripts: scripts,
+                errors: errors.array()[0].msg
+            });
+        } else {
+            // console.log('sign-up');
+            User.register( // défini un nouvel utilisateur dans la base de donnée
+                new User({ 
+                    username: req.body.username,
+                    email: req.body.email,
+                    password: req.body.pasword,
+                    confirm: req.body.confirm
+                }),
+                password, // hash le mot de passe
+                function(err, user) {
+                    if (err) {
+                        console.log('Sign Up error: ', err);
+                    } else {
+                        console.log('sign up details', user);
+                        if (user.password != user.confirm) {
+                            console.log('wrong confirmation password');
+                            return res.render('/signup');
+                        } else {
+                            passport.authenticate("local")(req, res, function() {
+                                res.redirect("/profile")
+                            });
+                        };
+                    };
+                });
+        };
 });
 //Login
 app.get('/login', function(req, res) {
@@ -202,88 +211,7 @@ app.get("/logout", function(req, res) {
 });
 
 
-//Submit new offer 
-app.get("/submit", function(req, res) {
-    res.render('submit-offer', {
-        stylesheets: stylesheets,
-        scripts: scripts
-    })
-});
 
-app.post('/submit', upload.single('image'), function(req, res) {
-    // console.log('submit request file', req.file);
-    var id = 303;
-    fs.rename(
-        req.file.path,
-        "public/uploads/" + req.file.filename + ".jpg",
-        function(err) {
-            if (err) { console.log("Writing error", err) }
-            User.
-                findOne({id: id}, function(err, user) {
-                    if (err) return handleError(err);
-                    console.log('populateUser',user)
-                    var city =  req.body.city
-                    var newOffer = new OfferModel({
-                        user: new mongoose.Types.ObjectId(user._id),
-                        id: 1466,
-                        title: req.body.title,
-                        description: req.body.description,
-                        images: "/uploads/" + req.file.filename + ".jpg",
-                        price: req.body.price,
-                        city: city.toLowerCase()
-                    });
-                    console.log('new offer', newOffer)
-                    newOffer.save(function(err, offer) {
-                        if (err) { console.log(err) }
-                        else {
-                            console.log('user saved with success', offer);
-                            res.render('success', {
-                                stylesheets: stylesheets,
-                                scripts: scripts
-                            });
-                        };
-                    });
-                });
-        });
-});
-
-
-
-
-
-
-
-
-//citiesListPage
-app.get('/cities/:city', function(req, res) {
-    var city = req.params.city;
-    var currentPage = req.query.page; // defini la page courante .query recupere une variable "?clé:valeur" dans la route
-    var itemsPerPages = 5; 
-    var authenticated = req.isAuthenticated();
-    var skip = ((currentPage - 1) * itemsPerPages); // pour passer le nombre d'items désiré.
-    OfferModel.find({city: city}, null, {limit: 5, skip: skip}, function(err, offers) {
-        var listedOffers = offers.map(function(offer) {
-            return {
-                title: offer.title,
-                id: offer.id,
-                price: offer.price,
-                date: getDateInFrench(offer.created),
-                thumbnail: offer.images[0],
-                criteria: offer.criteria
-            };
-        });
-        var totalOffers = listedOffers.length;
-        var totalPages = Math.ceil(totalOffers / itemsPerPages);
-        res.render('offers', {
-            stylesheets: stylesheets,
-            scripts: scripts,
-            offers: listedOffers,
-            city: city,
-            authenticated: authenticated
-            }
-        );
-    });
-});
 
 app.get('/add/favorites/:offerId', function(req, res) {
     var offerId = req.params.offerId
@@ -299,33 +227,7 @@ app.get('/remove/favorites/:offerId', function(req, res) {
     })
 });
 
-//offerPage
-app.get('/offers/:id', function(req, res) {
-    var id = req.params.id;
-    var authenticated = req.isAuthenticated();
-    OfferModel.
-        findOne({id: id}).
-        populate('user').
-        exec(function(err, offer) {
-            if (err) return handleError(err);
-            console.log(offer.user.firstName);
-            var images = offer.images.map(function(image, index) {
-                return {
-                    isActive: index === 0,
-                    image: image
-                }
-            })
-            res.render('offer', {
-                stylesheets: stylesheets,
-                scripts: scripts,
-                offer: offer,
-                date: getDateInFrench(offer.created),
-                images, images,
-                authenticated: authenticated
-            
-            });
-        });
-});
+
 //errorPage
 app.get('/*', function(req, res) {
     res.render('e404', {

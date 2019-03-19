@@ -1,15 +1,21 @@
+
 <div class="container">
+    
+    {{#if errors}}
+    <div class="alert alert-danger" role="alert">
+        {{errors}}
+    </div>
+    {{/if}}
+
     <div class="row sign-up-box">
         <form action="/signup" method="POST" class="sign-up-content">
 
 
-            {{!-- <div class="input-group mb-3">
+            <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Nom</span>
+                    <span class="input-group-text" id="basic-addon1">Nom d'utilisateur</span>
                 </div>
-                <input type="text" class="form-control" placeholder="Nom de famille" name="surname" aria-label="surname" aria-describedby="basic-addon1">
-                <input type="text" class="form-control" placeholder="Prénom" name="firstname" aria-label="firstname" aria-describedby="basic-addon1">
-
+                <input type="text" class="form-control" placeholder="Dohn Joe" name="username" aria-label="username" aria-describedby="basic-addon1">
             </div>
 
 
@@ -18,14 +24,6 @@
                     <span class="input-group-text" id="basic-addon1">Email</span>
                 </div>
                 <input type="email" class="form-control" placeholder="exemple@lbg.com" name="email" aria-label="email" aria-describedby="basic-addon1">
-            </div> --}}
-
-
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="basic-addon1">Nom d'utilisateur</span>
-                </div>
-                <input type="text" class="form-control" placeholder="Dohn Joe" name="username" aria-label="username" aria-describedby="basic-addon1">
             </div>
 
 
