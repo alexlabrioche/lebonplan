@@ -10,11 +10,10 @@ $font-size-light: 300;
 $font-size-medium: 400;
 $font-size-strong: 600;
 
-
 // BASE //
 body {
     font-family: $font-stack;
-    font-weight: 300;
+    font-weight: $font-size-light;
 }
 h2 {
     font-family: $font-theme;

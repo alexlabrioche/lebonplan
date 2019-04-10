@@ -88,10 +88,11 @@ router.post('/submit', upload.single('image'), function(req, res) {
                 findOne({id: id}, function(err, user) {
                     if (err) return handleError(err);
                     console.log('populateUser',user)
-                    var city =  req.body.city
+                    var city =  req.body.city;
+                    console.log(user.countDocuments());
                     var newOffer = new OfferModel({
                         user: new mongoose.Types.ObjectId(user._id),
-                        id: 1468,
+                        id: 1466,
                         title: req.body.title,
                         description: req.body.description,
                         images: "/uploads/" + req.file.filename + ".jpg",
