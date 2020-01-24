@@ -4,9 +4,8 @@
 
 #### React+Express project with Auth and CRUD APIactions.
  
-  - 📊 React Class Components 
-  - 🗺️ Express Server
-  - 💾 CRUD API
+  - 📊 Handlebars template engine
+  - 🗺️ JSON STATIC files
   
   You can see offers, publish, delete or edit yours if you are login 💻
 
